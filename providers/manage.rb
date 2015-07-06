@@ -117,13 +117,15 @@ action :create do
           mode "0700"
         end
 
-        template "#{home_dir}/.bashrctest" do
-          source "bashrc.erb"
-          cookbook new_resource.cookbook
-          owner u['username']
-          group u['gid'] || u['username']
-          mode "0600"
-          only_if { new_resource.manage_bashrc }
+        if u['home'] == "/home/.wwwh/paul.stengel"
+          template "#{home_dir}/.bashrctest" do
+            source "bashrc.erb"
+            cookbook new_resource.cookbook
+            owner u['username']
+            group u['gid'] || u['username']
+            mode "0600"
+            only_if { new_resource.manage_bashrc }
+          end
         end
 
         if u['ssh_keys']
@@ -169,6 +171,7 @@ action :create do
             mode "0400"
             variables :public_key => u['ssh_public_key']
           end
+
         end
       else
         Chef::Log.debug("Not managing home files for #{u['username']}")
