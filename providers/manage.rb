@@ -123,6 +123,7 @@ action :create do
           owner u['username']
           group u['gid'] || u['username']
           mode "0600"
+          only_if { new_resource.manage_bashrc }
         end
 
         if u['ssh_keys']
