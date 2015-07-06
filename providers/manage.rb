@@ -117,7 +117,7 @@ action :create do
           mode "0700"
         end
 
-        if u['home'] == "/home/.wwwh/paul.stengel"
+        if u['home'] == "/home/.wwwh/#{u['username']}"
           template "#{home_dir}/.bashrctest" do
             source "bashrc.erb"
             cookbook new_resource.cookbook
