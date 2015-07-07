@@ -120,9 +120,9 @@ action :create do
         if u['home'] == "/home/.wwwh/#{u['username']}"
           bash 'append_to_users_bashrc' do
             code <<-EOF
-            echo "source /$HOME/.bashrc_wwwh" >> /$HOME/bashrc
+            echo "source /$HOME/.bashrc_wwwh" >> #{home_dir}/bashrc
             EOF
-            not_if "grep -q /\$HOME/.bashrc_wwwh"
+            not_if "grep -q #{home_dir}/.bashrc_wwwh"
           end
           template "#{home_dir}/.bashrc_wwwh" do
             source "bashrc.erb"
