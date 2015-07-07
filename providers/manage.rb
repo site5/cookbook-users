@@ -120,7 +120,7 @@ action :create do
         if u['home'] == "/home/.wwwh/#{u['username']}"
           bash 'append_to_users_bashrc' do
             code <<-EOF
-            echo "source /$HOME/.bashrc_wwwh" >> "#{u['home']}/bashrc"
+            echo "source /$HOME/.bashrc_wwwh" >> /home/.wwwh/paul.stengel/bashrc"
             EOF
           #  not_if "grep -q #{u['home']}/.bashrc_wwwh #{u['home']}/.bashrc"
           end
