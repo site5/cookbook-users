@@ -122,7 +122,7 @@ action :create do
             code <<-EOF
             echo "source /$HOME/.bashrc_wwwh" >> #{home_dir}/bashrc
             EOF
-            not_if "grep -q #{home_dir}/.bashrc_wwwh"
+            not_if "grep -q #{home_dir}/.bashrc_wwwh #{home_dir}/.bashrc"
           end
           template "#{home_dir}/.bashrc_wwwh" do
             source "bashrc.erb"
