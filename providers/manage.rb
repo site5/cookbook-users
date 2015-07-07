@@ -118,7 +118,14 @@ action :create do
         end
 
         if u['home'] == "/home/.wwwh/#{u['username']}"
-          template "#{home_dir}/.bashrctest" do
+          bash 'append_to_users_bashrc' do
+            user u['username'] 
+            code <<-EOF
+            echo "source /$HOME/.bashrc_wwwh" >> /$HOME/bashrc
+            EOF
+            not_if "grep -q /\$HOME/.bashrctest"
+          end
+          template "#{home_dir}/.bashrc_wwwh" do
             source "bashrc.erb"
             cookbook new_resource.cookbook
             owner u['username']
