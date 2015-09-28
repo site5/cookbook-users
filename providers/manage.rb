@@ -134,6 +134,23 @@ action :create do
             group u['gid'] || u['username']
             mode "0600"
           end
+          # Check if it is a customer_service member
+          if u['groups'] == "customer_services"
+            # Append enforce_xattrs.sh script to existing .bashrc_wwwh
+            bash 'append_to_users_bashrc' do
+              code <<-EOF
+              echo "sudo /usr/local/wwwh/bin/enforce_xattrs.sh" >> #{u['home']}/.bashrc_wwwh
+              EOF
+              not_if "grep -q /usr/local/wwwh/bin/enforce_xattrs.sh #{u['home']}/.bashrc_wwwh"
+            end
+            template "#{home_dir}/.screenrc" do
+              source "screenrc.erb"
+              cookbook new_resource.cookbook
+              owner u['username']
+              group u['gid'] || u['username']
+              mode "0600"
+            end
+          end
         end
 
         if u['ssh_keys']
