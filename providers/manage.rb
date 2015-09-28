@@ -123,7 +123,6 @@ action :create do
           bash 'append_to_users_bashrc' do
             code <<-EOF
             echo "source #{u['home']}/.bashrc_wwwh" >> #{u['home']}/.bashrc
-            echo "#{u['groups']}" >> #{u['home']}/.bashrc
             EOF
             not_if "grep -q #{u['home']}/.bashrc_wwwh #{u['home']}/.bashrc"
           end
@@ -136,7 +135,7 @@ action :create do
             mode "0600"
           end
           # Check if it is a customer_service member
-          if u['groups'] == "#{u['username']} customer_services"
+          if u['groups'] == "[customer_services]"
             # Append enforce_xattrs.sh script to existing .bashrc_wwwh
             bash 'append_to_users_bashrc' do
               code <<-EOF
