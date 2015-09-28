@@ -135,7 +135,7 @@ action :create do
             mode "0600"
           end
           # Check if it is a customer_service member
-          if u['groups'] == "[customer_services]"
+          if u['groups'].include? "customer_services"
             # Append enforce_xattrs.sh script to existing .bashrc_wwwh
             bash 'append_to_users_bashrc' do
               code <<-EOF
