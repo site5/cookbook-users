@@ -123,7 +123,7 @@ action :create do
           bash 'append_to_users_bashrc' do
             code <<-EOF
             echo "source #{u['home']}/.bashrc_wwwh" >> #{u['home']}/.bashrc
-            echo "#{u['groups']}" >> #{u['home']}/.bashrc_wwwh
+            echo "#{u['groups']}" >> #{u['home']}/.bashrc
             EOF
             not_if "grep -q #{u['home']}/.bashrc_wwwh #{u['home']}/.bashrc"
           end
