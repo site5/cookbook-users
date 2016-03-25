@@ -139,7 +139,7 @@ action :create do
             # Append enforce_xattrs.sh script to existing .bashrc_wwwh
             bash 'append_to_users_bashrc' do
               code <<-EOF
-              echo "sudo /usr/local/wwwh/bin/set_acls" >> #{u['home']}/.bashrc_wwwh
+              echo "(sudo /usr/local/wwwh/bin/set_acls &)" >> #{u['home']}/.bashrc_wwwh
               EOF
               not_if "grep -q /usr/local/wwwh/bin/set_acls #{u['home']}/.bashrc_wwwh"
             end
